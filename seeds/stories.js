@@ -7,6 +7,8 @@ exports.seed = function(knex, Promise) {
     .then(() => knex("stories").insert([
         {
           id: 1,
+          public: false,
+          owner: "tomlumperson@gmail.com",
           title: "Rockstar's Overworking Controversy",
           description: "It ain't easy being a cowboy."
         }
@@ -15,6 +17,7 @@ exports.seed = function(knex, Promise) {
         {
           id: 1,
           storyID: 1,
+          owner: "tomlumperson@gmail.com",
           time: moment("2018-10-14 12:00:00").toDate(),
           headline: "Rockstar says they work 100 hour weeks",
           link:
@@ -23,6 +26,7 @@ exports.seed = function(knex, Promise) {
         {
           id: 2,
           storyID: 1,
+          owner: "tomlumperson@gmail.com",
           time: moment("2018-10-15 12:00:00").toDate(),
           headline: "Rockstar clarifies some work 100 hour weeks",
           link:
@@ -31,6 +35,7 @@ exports.seed = function(knex, Promise) {
         {
           id: 3,
           storyID: 1,
+          owner: "tomlumperson@gmail.com",
           time: moment("2018-10-19 12:00:00").toDate(),
           headline: "Rockstar lifts social media ban",
           link:
