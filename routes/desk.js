@@ -1,11 +1,12 @@
-const express = require("express")
+const koa = require("koa")
+const Router = require("koa-router");
 const connection = require("../knexfile")
 const { checkJwt } = require("./auth")
 const { stringCompare, array, tag } = require("./utils")
 const knex = require("knex")(connection)
 const moment = require("moment")
 
-const router = express.Router()
+const router = new Router({prefix: "/desk"})
 
 router.get("/", checkJwt, async (req, res) => {
 	try {

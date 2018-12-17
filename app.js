@@ -1,26 +1,35 @@
 require("dotenv").config()
-const express = require("express")
-const bodyParser = require("body-parser")
-const cors = require("cors")
-const helmet = require("helmet")
-const morgan = require("morgan")
+const koa = require("koa")
+const combineRouters = require('koa-combine-routers')
+const bodyParser = require("koa-bodyparser")
+const cors = require("koa-cors")
+const helmet = require("koa-helmet")
+const morgan = require("koa-morgan")
 
-const stories = require("./routes/stories")
+// const stories = require("./routes/stories")
 const desk = require("./routes/desk")
 
-const app = express()
+const app = new koa()
+app.use(async function handleError(context, next) {
+  try {
+    await next();
+  } catch (error) {
+    context.status = 500;
+    context.body = error;
+  }
+});
 app.use(helmet())
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser())
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan("combined"))
 // Routes
-app.use("/stories", stories)
-app.use("/desk", desk)
-app.use(function(error, req, res, next) {
-	console.log(error)
-  res.json({ message: error.message });
-})
+const router = combineRouters(
+  desk
+)
+
+app.use(router())
+
 const port = process.env.PORT || 5000
 app.listen(port, () => {
 	console.log("App listening on port ", port)	

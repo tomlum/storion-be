@@ -1,8 +1,8 @@
-const jwt = require("express-jwt")
-const jwksRsa = require("jwks-rsa")
+const jwt = require("koa-jwt")
+const { koaJwtSecret } = require("jwks-rsa")
 
 module.exports.checkJwt = jwt({
-	secret: jwksRsa.expressJwtSecret({
+	secret: koaJwtSecret({
 		cache: true,
 		rateLimit: true,
 		jwksRequestsPerMinute: 5,
