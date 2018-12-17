@@ -10,7 +10,7 @@
     "seed": "knex seed:run",
     "remigrate": "knex-migrate redo --verbose & yarn seed",
     "destroy": "node scripts/destroy",
-    "reset": "yarn destroy & yarn migrate"
+    "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev"
   },
   "dependencies": {
     "cors": "^2.8.4",

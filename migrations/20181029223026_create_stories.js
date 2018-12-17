@@ -11,16 +11,17 @@ exports.up = function(knex, Promise) {
       table.increments("id").primary()
       table.string("owner")
       table.string("headline")
+      table.string("tags")
       table.string("link")
-      table.dateTime("time")
-      table.integer("storyID").references("stories.id")
+      table.dateTime("time").notNullable().defaultTo(knex.raw('now()'))
+      table.integer("storyID").nullable().references("stories.id")
     })
   ])
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-  	knex.schema.dropTable("stories"),
-  	knex.schema.dropTable("articles")
+    knex.schema.dropTable("articles"),
+  	knex.schema.dropTable("stories")
   ])
 };

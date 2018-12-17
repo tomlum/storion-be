@@ -17,7 +17,10 @@ app.use(morgan("combined"))
 // Routes
 app.use("/stories", stories)
 app.use("/desk", desk)
-
+app.use(function(error, req, res, next) {
+	console.log(error)
+  res.json({ message: error.message });
+})
 const port = process.env.PORT || 5000
 app.listen(port, () => {
 	console.log("App listening on port ", port)	
