@@ -1,6 +1,6 @@
 const express = require("express")
 const { checkJwt } = require("./auth")
-const connection = require("../knexfile")
+const connection = require("../config/knexfile")
 const knex = require("knex")(connection)
 
 const router = express.Router()

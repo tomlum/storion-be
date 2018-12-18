@@ -18,8 +18,7 @@ app.use(morgan("combined"))
 app.use("/stories", stories)
 app.use("/desk", desk)
 app.use(function(error, req, res, next) {
-	console.log(error)
-  res.json({ message: error.message });
+  res.status(500).send(error.message);
 })
 const port = process.env.PORT || 5000
 app.listen(port, () => {

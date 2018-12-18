@@ -1,5 +1,5 @@
 const express = require("express")
-const connection = require("../knexfile")
+const connection = require("../config/knexfile")
 const { checkJwt } = require("./auth")
 const { stringCompare, array, tag } = require("./utils")
 const knex = require("knex")(connection)
@@ -7,27 +7,27 @@ const moment = require("moment")
 
 const router = express.Router()
 
-router.get("/", checkJwt, async (req, res) => {
+router.get("/", checkJwt, async (req, res, next) => {
 	try {
 		if (req.user) {
-			knex("articles")
+			const articles = await knex("articles")
 				.where("owner", req.user.email)
 				.select()
-				.then(articles => {
-					for (let i = 0; i < articles.length; i++) {
-						articles[i].tags = articles[i].tags.split("`")
-					}
-					res.status(200).json(articles)
-				})
+
+			for (let i = 0; i < articles.length; i++) {
+				articles[i].tags = articles[i].tags.split("`")
+			}
+
+			res.status(200).json(articles)
 		} else {
 			res.status(200).json({ error: "No user" })
 		}
 	} catch (error) {
-		res.status(500).json(error)
+		next(error)
 	}
 })
 
-router.post("/", checkJwt, async (req, res) => {
+router.post("/", checkJwt, async (req, res, next) => {
 	try {
 		if (req.user) {
 			const article = req.body
@@ -45,23 +45,16 @@ router.post("/", checkJwt, async (req, res) => {
 				owner: req.user.email,
 				storyID: null
 			}
-			if(!moment(
-					newArticle.time,
-					"YYYY-MM-DD",
-					true
-				).isValid()){
+			if (!moment(newArticle.time, "YYYY-MM-DD", true).isValid()) {
 				throw new Error("Invalid date")
 			}
-			knex("articles")
-				.insert(newArticle)
-				.then(resp => {
-					res.status(200).json({})
-				})
+			await knex("articles").insert(newArticle)
+			res.status(200).json({})
 		} else {
 			res.status(200).json({ error: "No user" })
 		}
 	} catch (error) {
-		res.status(500).send(error.message)
+		next(error)
 	}
 })
 
