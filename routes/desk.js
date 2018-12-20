@@ -45,11 +45,18 @@ router.post("/", checkJwt, async (req, res, next) => {
 				owner: req.user.email,
 				storyID: null
 			}
-			if (!moment(newArticle.time, "YYYY-MM-DD", true).isValid()) {
+			console.log(newArticle.time, moment(newArticle.time, "YYYY-MM-DD", true))
+			if (newArticle.time && !moment(newArticle.time, "YYYY-MM-DD", true).isValid()) {
 				throw new Error("Invalid date")
 			}
-			await knex("articles").insert(newArticle)
-			res.status(200).json({})
+
+			if (article.id) {
+				await knex("articles").where({ id: article.id }).update(newArticle)
+				res.status(200).json({})
+			} else {
+				await knex("articles").insert(newArticle)
+				res.status(200).json({})
+			}
 		} else {
 			res.status(200).json({ error: "No user" })
 		}

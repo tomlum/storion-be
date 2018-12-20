@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "nodemon app",
-    "migrate": "knex migrate:latest",
-    "seed": "knex seed:run",
-    "remigrate": "knex-migrate redo --verbose & yarn seed",
+    "migrate": "knex migrate:latest --knexfile ./knex/knexfile.js",
+    "seed": "knex seed:run --knexfile ./knex/knexfile.js",
+    "remigrate": "knex-migrate redo --verbose --knexfile ./knex/knexfile.js & yarn seed",
     "destroy": "node scripts/destroy",
     "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev"
   },
