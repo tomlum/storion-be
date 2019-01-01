@@ -7,15 +7,27 @@ const moment = require("moment")
 
 const router = express.Router()
 
-router.get("/", checkJwt, async (req, res, next) => {
+router.get("/test", async (req, res, next) => {
 	try {
-		if (req.user) {
+		res.status(200).json({nice: "success"})
+	} catch (error) {
+		next(error)
+	}
+})
+
+router.get("/", async (req, res, next) => {
+	try {
+		if (!req.user) {
 			const articles = await knex("articles")
-				.where("owner", req.user.email)
+				.where("owner", "test")
 				.select()
 
 			for (let i = 0; i < articles.length; i++) {
-				articles[i].tags = articles[i].tags.split("`")
+				if (articles[i].tags === ""){
+					articles[i].tags = []
+				} else {
+					articles[i].tags = articles[i].tags.split("`")
+				}
 			}
 
 			res.status(200).json(articles)

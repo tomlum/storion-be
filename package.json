@@ -5,12 +5,19 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon app",
+    "start": "node app.js",
+    "dev": "sls offline start",
+    "redeploy:staging": "sls deploy --stage dev",
+    "redeploy:production": "sls deploy --stage prod",
+    "deploy:staging": "sls deploy function -f app --stage dev",
+    "deploy:production": "sls deploy function -f app --stage prod",
     "migrate": "knex migrate:latest --knexfile ./knex/knexfile.js",
     "seed": "knex seed:run --knexfile ./knex/knexfile.js",
     "remigrate": "knex-migrate redo --verbose --knexfile ./knex/knexfile.js & yarn seed",
     "destroy": "node scripts/destroy",
-    "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev"
+    "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev",
+    "tail:staging": "serverless logs -f app -t --stage dev",
+    "tail:production": "serverless logs -f app -t --stage prod"
   },
   "dependencies": {
     "cors": "^2.8.4",
@@ -22,12 +29,13 @@
     "knex": "^0.15.2",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
-    "objection": "^1.4.0",
-    "pg": "^7.6.0"
+    "pg": "^7.6.0",
+    "serverless-http": "^1.8.0"
   },
   "devDependencies": {
     "knex-cleaner": "^1.1.4",
     "knex-migrate": "^1.7.0",
-    "nodemon": "^1.18.5"
+    "nodemon": "^1.18.5",
+    "serverless-offline": "^3.31.3"
   }
 }

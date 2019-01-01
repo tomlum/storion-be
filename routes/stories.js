@@ -13,13 +13,11 @@ router.get("/:storyID", checkJwt, async (req, res) => {
 			res.status(200).json(articles)
 		})
 		.catch(error => {
-			console.log(">>>>>> ", error)
 			res.status(500).json({ error })
 		})
 })
 
 router.get("/", async (req, res) => {
-	// console.log(">>>>>>>> ", req.user.name)
 	knex("stories")
 		.select()
 		.then(stories => {

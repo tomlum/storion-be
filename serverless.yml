@@ -1,0 +1,26 @@
+service: storion
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: us-east-1
+  vpc:
+    securityGroupIds:
+      - sg-02d34fc3e6c7ee887
+    subnetIds:
+      - subnet-da6aac90
+      - subnet-2b3c0176
+      - subnet-81e0dcae
+      - subnet-0e293a6a
+      - subnet-9aba1995
+      - subnet-fa557ac5
+
+functions:
+  app:
+    handler: app.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+plugins:
+  - serverless-offline
