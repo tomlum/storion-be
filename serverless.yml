@@ -2,7 +2,7 @@ service: storion
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   region: us-east-1
   vpc:
     securityGroupIds:
@@ -24,3 +24,4 @@ functions:
 
 plugins:
   - serverless-offline
+  - serverless-plugin-include-dependencies

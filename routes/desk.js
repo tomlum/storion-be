@@ -15,11 +15,46 @@ router.get("/test", async (req, res, next) => {
 	}
 })
 
-router.get("/", async (req, res, next) => {
+router.get("/seed", async (req, res, next) => {
+	try {
+		const res = await knex.seed.run({directory: "./knex/seeds", loadExtensions: [".js"]})
+		console.log(res)
+		res.status(200).json({nice: "success"})
+	} catch (error) {
+		console.log(error)
+		next(error)
+	} finally {
+		return
+	}
+})
+
+router.get("/test2", async (req, res, next) => {
 	try {
 		if (!req.user) {
+			console.log("21 !!!")
 			const articles = await knex("articles")
-				.where("owner", "test")
+				.where("owner", "")
+				.select()
+			console.log("25 !!!")
+			res.status(200).json(articles)
+			console.log("27 !!!")
+		} else {
+			res.status(200).json({ error: "No user" })
+		}
+	} catch (error) {
+		console.log("32 !!!")
+		next(error)
+	} finally {
+		console.log("35 !!!")
+		return
+	}
+})
+
+router.get("/", checkJwt, async (req, res, next) => {
+	try {
+		if (req.user) {
+			const articles = await knex("articles")
+				.where("owner", req.user.email)
 				.select()
 
 			for (let i = 0; i < articles.length; i++) {

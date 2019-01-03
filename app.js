@@ -20,7 +20,13 @@ app.use(morgan("combined"))
 app.use("/stories", stories)
 app.use("/desk", desk)
 app.use(function(error, req, res, next) {
+	console.log("error", error)
 	res.status(500).send(error.message)
 })
 
-module.exports.handler = serverless(app)
+const handler = serverless(app);
+console.log("aaaaaaaaaa")
+module.exports.handler = async (event, context) => {
+	context.callbackWaitsForEmptyEventLoop = false
+  return await handler(event, context);
+};

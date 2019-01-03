@@ -30,12 +30,14 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "pg": "^7.6.0",
+    "serverless": "^1.35.1",
     "serverless-http": "^1.8.0"
   },
   "devDependencies": {
     "knex-cleaner": "^1.1.4",
     "knex-migrate": "^1.7.0",
     "nodemon": "^1.18.5",
-    "serverless-offline": "^3.31.3"
+    "serverless-offline": "^3.31.3",
+    "serverless-plugin-include-dependencies": "^3.2.1"
   }
 }
