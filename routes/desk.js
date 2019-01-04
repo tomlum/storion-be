@@ -30,6 +30,7 @@ router.get("/test2", async (req, res, next) => {
 
 router.get("/", checkJwt, async (req, res, next) => {
 	try {
+		console.log("GOT HERE!!!")
 		if (req.user) {
 			const articles = await knex("articles")
 				.where("owner", req.user.email)
