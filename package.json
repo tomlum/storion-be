@@ -11,7 +11,11 @@
     "seed": "knex seed:run --knexfile ./knex/knexfile.js",
     "remigrate": "knex-migrate redo --verbose --knexfile ./knex/knexfile.js & yarn seed",
     "destroy": "node scripts/destroy",
-    "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev"
+    "reset": "yarn destroy && yarn migrate && yarn seed && yarn dev",
+    "deploy:staging": "git push staging master",
+    "deploy:production": "git push heroku master",
+    "tail:staging": "heroku logs --tail --app tranquil-woodland-85436",
+    "tail:production": "heroku logs --tail --app storion"
   },
   "dependencies": {
     "cors": "^2.8.4",
