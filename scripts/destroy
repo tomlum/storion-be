@@ -1,7 +1,5 @@
 require("dotenv").config()
 
-const knexCleaner = require("knex-cleaner")
-
 const knex = require("knex")({
 	client: "pg",
 	connection: process.env.DATABASE_URL

@@ -1,5 +1,3 @@
-const moment = require("moment")
-
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex("articles").del()
