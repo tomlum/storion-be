@@ -1,8 +1,8 @@
 const express = require("express")
-const connection = require("../config/knexfile")
+const connection = require("../knex/knexfile")
 const { checkJwt } = require("./auth")
 const { stringCompare, array, tag } = require("./utils")
-const knex = require("knex")(connection)
+const knex = require("knex")(connection[process.env.NODE_ENV || 'development'])
 const moment = require("moment")
 
 const router = express.Router()
@@ -10,10 +10,19 @@ const router = express.Router()
 router.get("/test", async (req, res, next) => {
 	try {
 		if (req.user) {
-			res.status(200).json({nice: "a user"})
+			res.status(200).json({nice: "a user", env: "-" + process.env.NODE_ENV})
 		} else {
-			res.status(200).json({nice: "no user"})
+			res.status(200).json({nice: "no user", env: "-" + process.env.NODE_ENV})
 		}
+	} catch (error) {
+		next(error)
+	}
+})
+
+router.get("/test2", async (req, res, next) => {
+	try {
+		const articles = await knex("articles").select()
+		res.status(200).json(articles)
 	} catch (error) {
 		next(error)
 	}

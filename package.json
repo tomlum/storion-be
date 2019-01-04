@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app",
+    "start": "NODE_ENV=production node app",
+    "dev": "NODE_ENV=development nodemon app NODE_ENV=",
     "migrate": "knex migrate:latest --knexfile ./knex/knexfile.js",
     "seed": "knex seed:run --knexfile ./knex/knexfile.js",
     "remigrate": "knex-migrate redo --verbose --knexfile ./knex/knexfile.js & yarn seed",
