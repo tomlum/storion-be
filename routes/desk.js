@@ -7,6 +7,18 @@ const moment = require("moment")
 
 const router = express.Router()
 
+router.get("/test", async (req, res, next) => {
+	try {
+		if (req.user) {
+			res.status(200).json({nice: "a user"})
+		} else {
+			res.status(200).json({nice: "no user"})
+		}
+	} catch (error) {
+		next(error)
+	}
+})
+
 router.get("/", checkJwt, async (req, res, next) => {
 	try {
 		if (req.user) {
