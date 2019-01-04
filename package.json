@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "node app",
     "dev": "nodemon app",
     "migrate": "knex migrate:latest --knexfile ./knex/knexfile.js",
     "seed": "knex seed:run --knexfile ./knex/knexfile.js",
