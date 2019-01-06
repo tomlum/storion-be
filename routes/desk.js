@@ -30,6 +30,7 @@ router.get("/test2", async (req, res, next) => {
 
 router.get("/", checkJwt, async (req, res, next) => {
 	try {
+		console.log("DATABASE_URL", process.env.DATABASE_URL)
 		if (req.user) {
 			console.log("let's do it", req.user.email)
 			const articles = await knex("articles")
