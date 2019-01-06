@@ -2,7 +2,7 @@ const express = require("express")
 const connection = require("../knex/knexfile")
 const { checkJwt } = require("./auth")
 const { stringCompare, array, tag } = require("./utils")
-const knex = require("knex")(connection[process.env.NODE_ENV || 'development'])
+const knex = require("knex")(connection[process.env.NODE_ENV_FILE || 'development'])
 const moment = require("moment")
 
 const router = express.Router()
@@ -28,21 +28,21 @@ router.get("/test2", async (req, res, next) => {
 	}
 })
 
-router.get("/", async (req, res, next) => {
+router.get("/", checkJwt, async (req, res, next) => {
 	try {
-		console.log("GOT HERE!!!")
-		console.log(req.user)
-		if (true) {
+		if (req.user) {
+			console.log("let's do it", req.user.email)
 			const articles = await knex("articles")
 				.where("owner", req.user.email)
 				.select()
-
+			console.log("ay nice")
 			for (let i = 0; i < articles.length; i++) {
 				articles[i].tags = articles[i].tags.split("`")
 			}
-
+			console.log("ay nicer")
 			res.status(200).json(articles)
 		} else {
+			console.log("oops")
 			res.status(200).json({ error: "No user" })
 		}
 	} catch (error) {
@@ -68,7 +68,7 @@ router.post("/", checkJwt, async (req, res, next) => {
 				owner: req.user.email,
 				storyID: null
 			}
-			console.log(newArticle.time, moment(newArticle.time, "YYYY-MM-DD", true))
+
 			if (newArticle.time && !moment(newArticle.time, "YYYY-MM-DD", true).isValid()) {
 				throw new Error("Invalid date")
 			}
