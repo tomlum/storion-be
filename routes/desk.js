@@ -31,7 +31,8 @@ router.get("/test2", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
 	try {
 		console.log("GOT HERE!!!")
-		if (req.user) {
+		console.log(req.user)
+		if (true) {
 			const articles = await knex("articles")
 				.where("owner", req.user.email)
 				.select()
