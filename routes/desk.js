@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.get("/test", async (req, res, next) => {
 	try {
+		console.log(process.env)
 		if (req.user) {
 			res.status(200).json({nice: "a user", env: "-" + process.env.NODE_ENV})
 		} else {
