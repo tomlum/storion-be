@@ -18,8 +18,7 @@ router.get("/:storyID", checkJwt, async (req, res) => {
 		})
 })
 
-router.get("/", async (req, res) => {
-	// console.log(">>>>>>>> ", req.user.name)
+router.get("/", checkJwt, async (req, res) => {
 	knex("stories")
 		.select()
 		.then(stories => {

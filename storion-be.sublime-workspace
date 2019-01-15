@@ -28,24 +28,56 @@
 	"buffers":
 	[
 		{
-			"contents": "const express = require(\"express\")\nconst connection = require(\"../knexfile\")\nconst { checkJwt } = require(\"./auth\")\nconst { stringCompare, array, tag } = require(\"./utils\")\nconst knex = require(\"knex\")(connection)\n\nconst router = express.Router()\n\nrouter.get(\"/\", checkJwt, async (req, res) => {\n\ttry {\n\t\tif (req.user) {\n\t\t\tknex(\"articles\")\n\t\t\t\t.where(\"owner\", req.user.email)\n\t\t\t\t.select()\n\t\t\t\t.then(articles => {\n\t\t\t\t\tfor (let i = 0; i < articles.length; i++) {\n\t\t\t\t\t\tarticles[i].tags = articles[i].tags.split(\"`\")\n\t\t\t\t\t}\n\t\t\t\t\tres.status(200).json(articles)\n\t\t\t\t})\n\t\t} else {\n\t\t\tres.status(200).json({ error: \"No user\" })\n\t\t}\n\t} catch (error) {\n\t\tres.status(500).json(error)\n\t}\n})\n\nrouter.post(\"/\", checkJwt, async (req, res) => {\n\ttry {\n\t\tif (req.user) {\n\t\t\tconsole.log(req.body)\n\t\t\tconst article = req.body\n\t\t\tfor (let i = 0; i < article.tags.length; i++) {\n\t\t\t\tif (tag.invalid(article.tags[i])) {\n\t\t\t\t\tarticle.tags.splice(i, 1)\n\t\t\t\t}\n\t\t\t}\n\t\t\tarticle.tags.sort(stringCompare)\n\t\t\tarticle.tags = article.tags.join(\"`\")\n\t\t\tconst newArticle = {\n\t\t\t\t...article,\n\t\t\t\towner: req.user.email,\n\t\t\t\tstoryID: 0\n\t\t\t}\n\t\t\tconsole.log(\"DATA >>>>>>> \", newArticle)\n\t\t\tknex(\"articles\")\n\t\t\t\t.insert(data)\n\t\t\t\t.then(resp => {\n\t\t\t\t\tres.status(200)\n\t\t\t\t})\n\t\t} else {\n\t\t\tres.status(200).json({ error: \"No user\" })\n\t\t}\n\t} catch (error) {\n\t\tres.status(500).json(error)\n\t}\n})\n\nmodule.exports = router\n",
-			"file": "routes/desk.js",
-			"file_size": 1378,
-			"file_write_time": 131894710562739820,
+			"file": "app.js",
 			"settings":
 			{
-				"buffer_size": 1379,
+				"buffer_size": 1049,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "routes/utils.js",
+			"file": "routes/desk.js",
 			"settings":
 			{
-				"buffer_size": 413,
+				"buffer_size": 2309,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 1223,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".env",
+			"settings":
+			{
+				"buffer_size": 212,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "routes/stories.js",
+			"settings":
+			{
+				"buffer_size": 782,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "should I just open one knex connection?",
+			"settings":
+			{
+				"buffer_size": 39,
+				"line_ending": "Unix",
+				"name": "should I just open one knex connection?"
 			}
 		}
 	],
@@ -97,6 +129,22 @@
 		"selected_items":
 		[
 			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
 				"jsp",
 				"Preferences: JsPrettier Settings - Default"
 			],
@@ -105,16 +153,8 @@
 				"Preferences: JsPrettier Settings - Default"
 			],
 			[
-				"list",
-				"Package Control: List Packages"
-			],
-			[
 				"build",
 				"Build: New Build System"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"lua form",
@@ -198,16 +238,36 @@
 	"expanded_folders":
 	[
 		"/Users/Hi/Desktop/storion-be",
-		"/Users/Hi/Desktop/storion-be/migrations",
-		"/Users/Hi/Desktop/storion-be/routes",
-		"/Users/Hi/Desktop/storion-be/scripts",
-		"/Users/Hi/Desktop/storion-be/seeds"
+		"/Users/Hi/Desktop/storion-be/knex",
+		"/Users/Hi/Desktop/storion-be/knex/migrations",
+		"/Users/Hi/Desktop/storion-be/knex/seeds",
+		"/Users/Hi/Desktop/storion-be/routes"
 	],
 	"file_history":
 	[
-		"/Users/Hi/Desktop/storion-be/seeds/stories.js",
-		"/Users/Hi/Desktop/storion-be/migrations/20181029223026_create_stories.js",
+		"/Users/Hi/Desktop/storion-be/scripts/destroy",
+		"/Users/Hi/Desktop/storion-be/knex/knexfile.js",
+		"/Users/Hi/Desktop/storion-be/knex/seeds/stories.js",
 		"/Users/Hi/Desktop/storion-be/package.json",
+		"/Users/Hi/Desktop/storion-be/.env",
+		"/Users/Hi/Desktop/storion-be/serverless.yml",
+		"/Users/Hi/Desktop/storion-be/node_modules/knex/lib/migrate/index.js",
+		"/Users/Hi/Desktop/storion-be/routes/desk.js",
+		"/Users/Hi/Desktop/storion-be/routes/stories.js",
+		"/Users/Hi/Desktop/storion-be/.elasticbeanstalk/config.yml",
+		"/Users/Hi/Desktop/storion-be/.ebextensions/01_env.config",
+		"/Users/Hi/Desktop/storion-be/migrations/20181029223026_create_stories.js",
+		"/Users/Hi/Desktop/storion-be/.ebextensions/02_nodecommand.config",
+		"/Users/Hi/Desktop/storion-be/.ebextensions/config.yml",
+		"/Users/Hi/Desktop/storion-be/.ebextensions/nodecommand.config",
+		"/Users/Hi/Desktop/storion-be/config/knexfile.js",
+		"/Users/Hi/Desktop/storion-be/app.js",
+		"/Users/Hi/Desktop/storion-be/node_modules/json-schema/lib/validate.js",
+		"/Users/Hi/Desktop/storion-be/routes/utils.js",
+		"/Users/Hi/Desktop/storion-be/seeds/stories.js",
+		"/Users/Hi/Desktop/storion-be/routes/auth.js",
+		"/Users/Hi/Desktop/storion-be/yarn.lock",
+		"/Users/Hi/Desktop/storion-be/storion-be.sublime-project",
 		"/Users/Hi/Desktop/storion-be/,",
 		"/Users/Hi/Desktop/storion-fe/src/pages/desk/index.js",
 		"/Users/Hi/Desktop/storion-fe/src/components/ArticleBlock.js",
@@ -312,27 +372,7 @@
 		"/Users/Hi/Desktop/Projects/HitMiss/commonUtilities.lua",
 		"/Users/Hi/Desktop/notes.notes",
 		"/Users/Hi/Desktop/Projects/No-Answer/main.lua",
-		"/Users/Hi/Desktop/Projects/Monkey/src/Pixel.jsx",
-		"/Users/Hi/Desktop/Projects/Monkey/Pixel.jsx",
-		"/Users/Hi/Desktop/Projects/Monkey/package.json",
-		"/Users/Hi/Desktop/Projects/Monkey/.eslintrc",
-		"/Users/Hi/Desktop/Projects/Monkey/node_modules/babel-polyfill/dist/polyfill.js",
-		"/Users/Hi/Desktop/SuperLuminauts/controls.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/player.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/main.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/config.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/menus.lua",
-		"/Users/Hi/Desktop/number.js",
-		"/Users/Hi/Desktop/tomlum.github.io/scripts/{",
-		"/Users/Hi/Desktop/tomlum.github.io/countSheep.js",
-		"/Users/Hi/Library/Application Support/Sublime Text 3/Packages/HTML-CSS-JS Prettify/Default (OSX).sublime-keymap",
-		"/Users/Hi/Desktop/tomlum.github.io/pixi.min.js",
-		"/Users/Hi/Desktop/SuperLuminauts/assets/sounds/dodge.wav",
-		"/Users/Hi/Desktop/SuperLuminauts/missions.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/enviro.lua",
-		"/Users/Hi/Desktop/SuperLuminauts/gamemodes.lua",
-		"/Users/Hi/Desktop/Projects/complexity",
-		"/Users/Hi/Desktop/tomlum.github.io/bla.html"
+		"/Users/Hi/Desktop/Projects/Monkey/src/Pixel.jsx"
 	],
 	"find":
 	{
@@ -344,6 +384,11 @@
 		"where_history":
 		[
 			"-*/node_modules/*",
+			"",
+			"-*/node_modules/*",
+			"/Users/Hi/Desktop/storion-be",
+			"/Users/Hi/Desktop/storion-be/seeds",
+			"-*/node_modules/*",
 			"-*/node-modules.*",
 			""
 		]
@@ -353,6 +398,62 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"DEV_DATABASE_URL",
+			"console.log",
+			"knexfile",
+			"compression",
+			"deploy",
+			"moment",
+			"knexCleaner",
+			"knex-cleaner",
+			"serverless",
+			"express",
+			".email",
+			"node",
+			"createScript",
+			"objection",
+			"subnet-",
+			"\n\n  ",
+			"\n",
+			"dev",
+			"offline",
+			"dotenv",
+			"NODE_ENV",
+			"process.env.NODE_ENV",
+			"generateStatsFile",
+			"console.",
+			".split",
+			"DD",
+			"invalid",
+			"directory",
+			"config",
+			"req",
+			"knexfile",
+			"taglist",
+			"failed with status code 500",
+			"res.status(500).json",
+			"useAsync",
+			"articles.for",
+			"bodyParser",
+			"express-jwt",
+			"expressjwt",
+			"\"express\"",
+			"express-jwt",
+			"desk",
+			"combineRouters",
+			"Router",
+			"router",
+			"Router",
+			"router",
+			"koa",
+			"express",
+			"moment",
+			"\n          id: ",
+			"ID: ",
+			"id: ",
+			"ID: ",
+			"id: ",
+			"          id: 1,",
 			"data",
 			".split",
 			"invalidTag",
@@ -382,32 +483,158 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "routes/desk.js",
+					"file": "app.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1379,
+						"buffer_size": 1049,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								782,
-								782
+								639,
+								639
 							]
 						],
 						"settings":
 						{
-							"SL.188.region_keys":
+							"SL.108.region_keys":
 							[
 							],
-							"SL.29.region_keys":
+							"SL.189.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "routes/desk.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								411,
+								411
+							]
+						],
+						"settings":
+						{
+							"SL.148.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"history_list_is_closing": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 3.0,
+						"translation.y": 107.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "package.json",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1223,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								628,
+								628
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JSON (JavaScriptNext).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 149.0,
+						"translation.y": 95.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": ".env",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 212,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								99,
+								99
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "routes/stories.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								313,
+								313
+							]
+						],
+						"settings":
+						{
+							"SL.245.region_keys":
 							[
 							],
 							"git_gutter_is_enabled": true,
@@ -415,42 +642,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 507.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "routes/utils.js",
+					"buffer": 5,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 413,
+						"buffer_size": 39,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								140,
-								140
+								27,
+								27
 							]
 						],
 						"settings":
 						{
-							"SL.105.region_keys":
-							[
-							],
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Babel/JavaScript (Babel).sublime-syntax"
+							"auto_name": "should I just open one knex connection?",
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -525,6 +749,38 @@
 				".env"
 			],
 			[
+				"packa",
+				"package.json"
+			],
+			[
+				"knex",
+				"knex/knexfile.js"
+			],
+			[
+				"p",
+				"package.json"
+			],
+			[
+				"knexfile",
+				"knex/knexfile.js"
+			],
+			[
+				"package",
+				"package.json"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"pa",
+				"package.json"
+			],
+			[
+				"pac",
+				"package.json"
+			],
+			[
 				"tag.",
 				"src/components/Tag.js"
 			],
@@ -563,10 +819,6 @@
 			[
 				"nav",
 				"src/components/Nav.js"
-			],
-			[
-				"packa",
-				"package.json"
 			],
 			[
 				"sagas/au",
@@ -623,10 +875,6 @@
 			[
 				".html",
 				"public/index.html"
-			],
-			[
-				"pack",
-				"package.json"
 			],
 			[
 				"metam",
@@ -773,7 +1021,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 110.0,
+	"side_bar_width": 133.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

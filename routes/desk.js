@@ -9,7 +9,6 @@ const router = express.Router()
 
 router.get("/test", async (req, res, next) => {
 	try {
-		console.log(process.env)
 		if (req.user) {
 			res.status(200).json({nice: "a user", env: "-" + process.env.NODE_ENV})
 		} else {
@@ -31,20 +30,15 @@ router.get("/test2", async (req, res, next) => {
 
 router.get("/", checkJwt, async (req, res, next) => {
 	try {
-		console.log("DATABASE_URL", process.env.DATABASE_URL)
 		if (req.user) {
-			console.log("let's do it", req.user.email)
 			const articles = await knex("articles")
 				.where("owner", req.user.email)
 				.select()
-			console.log("ay nice")
 			for (let i = 0; i < articles.length; i++) {
 				articles[i].tags = articles[i].tags.split("`")
 			}
-			console.log("ay nicer")
 			res.status(200).json(articles)
 		} else {
-			console.log("oops")
 			res.status(200).json({ error: "No user" })
 		}
 	} catch (error) {
